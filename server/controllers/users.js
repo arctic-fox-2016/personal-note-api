@@ -5,7 +5,11 @@ module.exports = {
     displays: displays,
     displayOne: displayOne,
     update: update,
-    deleteitem: deleteitem
+    deleteitem: deleteitem,
+    addNote:addNote,
+    getNote:getNote,
+    editNote:editNote,
+    deleteNote:deleteNote
   }
 
 function insert(req, res, next) {
@@ -27,6 +31,25 @@ function insert(req, res, next) {
 
 }
 
+function addNote(req, res, next) {
+  console.log("addnotess");
+  Users.findOne({
+      _id: req.params.id
+  }, (err, users) => {
+      //update the book
+      users.notes.push({
+        title:req.body.title,
+        content:req.body.content
+      })
+      users.save((err)=>{
+        if(err)
+          throw err
+        res.json(users)
+      })
+  })
+
+}
+
 function displays(req, res) {
   console.log("JALANKAN");
     Users.find({}, (err, users) => {
@@ -42,6 +65,73 @@ function displayOne(req, res) {
         res.json(users)
     })
 }
+
+
+function getNote(req, res) {
+    Users.findOne({
+        'notes._id': req.params.id
+    }, (err, users) => {
+        //update the book
+        //console.log(users.notes[0]._id);
+          for(let i=0;i<users.notes.length;i++){
+            if(err)
+            return
+            else if (users.notes[i]._id == req.params.id){
+              res.json(users.notes[i])
+            }
+          }
+
+    })
+}
+
+
+
+function editNote(req, res) {
+    Users.findOne({
+        'notes._id': req.params.id
+    }, (err, users) => {
+      for(let i=0;i<users.notes.length;i++){
+        if(err)
+        return
+        else if (users.notes[i]._id == req.params.id){
+          users.notes[i].title = req.body.title,
+          users.notes[i].content = req.body.content
+          users.save((err)=>{
+              if(err)
+                throw err
+                res.json(users.notes[i])
+          })
+
+        }
+      }
+
+    })
+}
+
+
+function deleteNote(req, res) {
+    Users.findOne({
+        'notes._id': req.params.id
+    }, (err, users) => {
+      for(let i=0;i<users.notes.length;i++){
+        if(err)
+        return
+        else if (users.notes[i]._id == req.params.id){
+
+            users.notes[i].remove((err,users)=>{
+              res.json({
+                "messages":"file deleted"
+              })
+            })
+
+
+
+        }
+      }
+
+    })
+}
+
 
 function update(req, res) {
 

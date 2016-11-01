@@ -68,16 +68,16 @@ describe('Insert Notes', function() {
                               res.should.have.status(200);
                               res.should.be.json;
                               //console.log(res.body);
-                              res.body[0].should.have.property('item_code');
                               res.body[0].should.have.property('name');
-                              res.body[0].should.have.property('description');
-                              res.body[0].should.have.property('price');
-                              res.body[0].should.have.property('stock');
-                              res.body[0].item_code.should.equal("003");
-                              res.body[0].name.should.equal("Aquas");
-                              res.body[0].description.should.equal("Buat Minums");
-                              res.body[0].price.should.equal(3000);
-                              res.body[0].stock.should.equal(2);
+                              res.body[0].should.have.property('age');
+                              res.body[0].should.have.property('title');
+                              res.body[0].should.have.property('content');
+
+                              res.body[0].name.should.equal("ivandaadaaja");
+                              res.body[0].age.should.equal(5);
+                              res.body[0].title.should.equal("buku ivan gak keren");
+                              res.body[0].content.should.equal("celana,baju");
+
                                 done()
                             })
                     })

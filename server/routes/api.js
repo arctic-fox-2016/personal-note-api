@@ -11,4 +11,9 @@ router.get('/users/:id', usersController.displayOne)
 router.put('/users/:id', usersController.update)
 router.delete('/users/:id', usersController.deleteitem)
 
+router.post('/notes/:id', usersController.addNote)
+router.get('/notes/:id', usersController.getNote)
+router.put('/notes/:id', usersController.editNote)
+router.delete('/notes/:id', usersController.deleteNote)
+
 module.exports = router

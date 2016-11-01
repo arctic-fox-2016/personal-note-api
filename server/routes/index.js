@@ -9,14 +9,17 @@ router.get('/', function(req, res, next) {
 });
 
 
-// User API
+// Users API
 router.post('/api/users', usersController.insert)
 router.get('/api/users', usersController.display)
 router.put('/api/users/:id', usersController.update)
 router.delete('/api/users/:id', usersController.hapus)
 router.get('/api/users/:id', usersController.detail)
 
+//Notes API
 router.post('/api/notes', usersController.addNote)
+router.put('/api/notes/:id', usersController.editNote)
+router.delete('/api/notes/:id', usersController.deleteNote)
 router.get('/api/notes/:id', usersController.searchByNoteId)
 
 

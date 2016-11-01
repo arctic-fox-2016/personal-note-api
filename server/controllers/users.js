@@ -9,16 +9,53 @@ module.exports = {
 
   addNote,addNote,
   searchByNoteId,searchByNoteId,
-
+  editNote,editNote,
+  deleteNote,deleteNote,
   insertUser:insertUser,
   deleteUser:deleteUser
 }
+
+function deleteNote(req,res,next){
+  Users.findOne({
+    'notes._id':req.params.id
+  },(err,items) => {
+    for(var i in items.notes){
+      if(items.notes[i].id==req.params.id){
+        items.notes.splice(i,1)
+      }
+    }
+
+    items.save((err)=> {
+      if(err) throw err
+      res.json(items)
+    })
+  })
+}
+
+function editNote(req,res,next){
+  Users.findOne({
+    'notes._id':req.params.id
+  },(err,items) => {
+    for(var i in items.notes){
+      if(items.notes[i].id==req.params.id){
+        items.notes[i].content=req.body.content
+        items.notes[i].title=req.body.title
+      }
+    }
+
+    items.save((err)=> {
+      if(err) throw err
+      res.json(items.notes.filter(function(a){ return a._id == req.params.id })[0])
+    })
+  })
+}
+
 
 function searchByNoteId(req,res,next){
   Users.findOne({
     'notes._id':req.params.id
   },(err,items) => {
-    res.json(items.notes)
+    res.json(items.notes.filter(function(a){ return a._id == req.params.id })[0])
   })
 }
 

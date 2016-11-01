@@ -20,7 +20,7 @@ let NotesType = new GraphQLObjectType({
     fields: () => ({
         id: {
             type: GraphQLString,
-            description: 'ID Note'
+            description: 'ID Not e'
         },
         userid: {
             type: GraphQLString,
@@ -31,7 +31,7 @@ let NotesType = new GraphQLObjectType({
             description: 'title for users note'
         },
         content: {
-            type: GraphQLInt,
+            type: GraphQLString,
             description: 'content of single note'
         }
     })

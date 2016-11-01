@@ -6,7 +6,7 @@ module.exports = {
 }
 
 function verifyToken(req, res, next){
-  next()
+  return next()
   var token = req.body.token || req.params.token || req.headers['x-access-token']
 
 	if(token){

@@ -6,7 +6,6 @@ module.exports = {
 }
 
 function verifyToken(req, res, next){
-  return next()
   var token = req.body.token || req.params.token || req.headers['x-access-token']
 
 	if(token){
@@ -18,10 +17,18 @@ function verifyToken(req, res, next){
 				})
 			} else {
 				req.decoded = decoded
-				return res.status(200).json({
-					success: true,
-					message: 'Success to authenticate token.'
-				})
+        const userModel = require('../models/users')
+        userModel.findOne({
+          username:req.decoded.username
+        },(err, record) => {
+          if(err) throw err
+          if(!_.isEmpty(record)){
+            req.decoded.id = record._id
+            next()
+          } else {
+            res.status(400).json({error:"Username already exists"})
+          }
+        })
 			}
 		})
 	} else {

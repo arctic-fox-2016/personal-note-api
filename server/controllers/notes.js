@@ -12,7 +12,7 @@ module.exports = {
 function createOne(req, res, next){
   var paramTitle = _.trim(req.body.title)
   var paramContent = _.trim(req.body.content)
-  var paramUser = _.trim(req.body.user)
+  var paramUser = _.trim(req.decoded.id)
 
   if(_.isEmpty(paramTitle)){
     res.status(400).json({error:"Note title must be filled"})
@@ -32,7 +32,7 @@ function createOne(req, res, next){
 }
 
 function findAll(req, res, next){
-  var paramUser = _.trim(req.params.user)
+  var paramUser = _.trim(req.decoded.id)
 
   if(_.isEmpty(paramUser)){
     res.status(400).json({error:"User ID must be filled"})

@@ -8,7 +8,7 @@ module.exports = {
   findOne:findOne,
   updateOne:updateOne,
   deleteOne:deleteOne,
-  authenticate:authenticate
+  authen:authenticate
 }
 
 function createOne(req, res, next){
@@ -103,22 +103,31 @@ function deleteOne(req, res, next){
 }
 
 function authenticate(req, res, next){
-  models.findOne({
-    username:req.body.username,
-    password:req.body.password
-  },(err, record) => {
-    if(err) throw err
-    if(!_.isEmpty(record)){
-      var tokenValue = jwt.sign({
-        "username": record.username
-      }, req.app.get('secretToken'), {
-        expiresIn: 86400 // expires in 24 hours
-      })
-      res.status(200).json({
-        token: tokenValue
-      })
-    } else {
-      res.status(400).json({error:"Username already exists"})
-    }
-  })
+  var paramUsername = _.trim(req.body.username)
+  var paramPassword = _.trim(req.body.password)
+
+  if(_.isEmpty(paramUsername)){
+    res.status(400).json({error:"Username must be filled"})
+  } else if(_.isEmpty(paramPassword)){
+    res.status(400).json({error:"Password must be filled"})
+  } else {
+    models.findOne({
+      username:paramUsername,
+      password:paramPassword
+    },(err, record) => {
+      if(err) throw err
+      if(!_.isEmpty(record)){
+        var tokenValue = jwt.sign({
+          "username": record.username
+        }, req.app.get('secretToken'), {
+          expiresIn: 86400 // expires in 24 hours
+        })
+        res.status(200).json({
+          token: tokenValue
+        })
+      } else {
+        res.status(400).json({error:"Record does not exist"})
+      }
+    })
+  }
 }

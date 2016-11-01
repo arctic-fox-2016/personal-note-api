@@ -10,7 +10,7 @@ router.post('/users', users.createOne)
 router.put('/users/:id', authenHelper.token, users.updateOne)
 router.delete('/users/:id', authenHelper.token, users.deleteOne)
 
-router.get('/notes', authenHelper.token, notes.findAll)
+router.get('/notes/:user', authenHelper.token, notes.findAll)
 router.get('/notes/:id', authenHelper.token, notes.findOne)
 router.post('/notes', authenHelper.token, notes.createOne)
 router.put('/notes/:id', authenHelper.token, notes.updateOne)

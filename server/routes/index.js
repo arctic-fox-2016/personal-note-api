@@ -17,7 +17,7 @@ router.delete('/api/users/:id', usersController.hapus)
 router.get('/api/users/:id', usersController.detail)
 
 router.post('/api/notes', usersController.addNote)
-
+router.get('/api/notes/:id', usersController.searchByNoteId)
 
 
 module.exports = router;

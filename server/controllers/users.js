@@ -9,15 +9,16 @@ module.exports = {
 
   addNote,addNote,
   searchByNoteId,searchByNoteId,
+
   insertUser:insertUser,
   deleteUser:deleteUser
 }
 
 function searchByNoteId(req,res,next){
   Users.findOne({
-    _id:req.body.id
+    'notes._id':req.params.id
   },(err,items) => {
-    
+    res.json(items.notes)
   })
 }
 

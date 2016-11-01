@@ -6,8 +6,7 @@ var userSchema = mongoose.Schema({
     age:Number,
     notes: [{
       title:String,
-      content:String,
-      _id: false
+      content:String
     }]
 }, {
   timestamps:true

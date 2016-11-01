@@ -12,15 +12,19 @@ module.exports = {
 function createOne(req, res, next){
   var paramTitle = req.body.title
   var paramContent = req.body.content
+  var paramUser = req.body.user
 
   if(_.isEmpty(paramTitle)){
     res.status(400).json({error:"Note title must be filled"})
   } else if(_.isEmpty(paramContent)){
     res.status(400).json({error:"Note content must be filled"})
+  } else if(_.isEmpty(paramUser)){
+    res.status(400).json({error:"User ID must be filled"})
   } else {
     var record = new models({
       title:paramTitle,
-      content:paramContent
+      content:paramContent,
+      user:paramUser
     })
     record.save()
     res.status(200).json(record)
@@ -28,7 +32,7 @@ function createOne(req, res, next){
 }
 
 function findAll(req, res, next){
-  models.find({},(err, record) => {
+  models.find({}).populate('user').exec((err, record) => {
     if(err) throw err
     if(!_.isEmpty(record)){
       res.status(200).json(record)

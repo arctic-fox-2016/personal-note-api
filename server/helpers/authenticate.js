@@ -7,7 +7,7 @@ module.exports = {
 
 function verifyToken(req, res, next){
   next()
-  var token = req.body.token || req.param('token') || req.headers['x-access-token']
+  var token = req.body.token || req.params.token || req.headers['x-access-token']
 
 	if(token){
 		jwt.verify(token, req.app.get('secretToken'), function(err, decoded) {
@@ -23,7 +23,7 @@ function verifyToken(req, res, next){
 					message: 'Success to authenticate token.'
 				})
 			}
-		});
+		})
 	} else {
     return res.status(403).json({
       success: false,

@@ -71,15 +71,18 @@ function getNote(req, res) {
     Users.findOne({
         'notes._id': req.params.id
     }, (err, users) => {
-        //update the book
-        //console.log(users.notes[0]._id);
-          for(let i=0;i<users.notes.length;i++){
-            if(err)
-            return
-            else if (users.notes[i]._id == req.params.id){
-              res.json(users.notes[i])
-            }
-          }
+
+
+      res.json(users.notes.filter(function(a){ return a._id == req.params.id })[0])
+
+          // for(let i=0;i<users.notes.length;i++){
+          //   if(err)
+          //   return
+          //   else if (users.notes[i]._id == req.params.id){
+          //     res.json(users.notes[i])
+          //   }
+          // }
+
 
     })
 }
@@ -90,6 +93,9 @@ function editNote(req, res) {
     Users.findOne({
         'notes._id': req.params.id
     }, (err, users) => {
+
+
+
       for(let i=0;i<users.notes.length;i++){
         if(err)
         return

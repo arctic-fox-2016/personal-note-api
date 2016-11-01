@@ -8,7 +8,7 @@ router.get('/', (req,res)=>{
 })
 
 router.get('/users', (req,res) => {
-  Users.find({}).populate('notes.note').exec((err, users)=>{
+  Users.find({}).populate('notes').exec((err, users)=>{
     if(err){
       res.json({message: 'error', detail: err})
     } else {
@@ -67,11 +67,12 @@ router.delete('/users', (req,res)=>{
     if(err){
       res.json({message:'error', detail: err})
     } else {
+      console.log('user', user)
       if(user){
         user.remove()
         user.save((err_save,savedUser)=>{
           if(err_save){
-            res.json({message: 'error', detail: err})
+            res.json({message: 'error', detail: err_save})
           } else {
             res.json(user)
           }
@@ -94,17 +95,17 @@ router.get('/notes/:id', (req,res)=>{
 })
 
 router.post('/notes', (req,res)=>{
-  let newNote = new Notes({userid: req.body.userid, title: req.body.title, content: req.body.content})
+  let newNote = new Notes({title: req.body.title, content: req.body.content})
   Users.findById(req.body.userid, (err_user, user)=>{
-    user.notes.push({note:newNote._id})
-    user.save((err_user_save, savedUser)=>{
-      newNote.save((err,note)=>{
-        if(err){
-          res.json({message: 'error', detail: err})
-        } else {
+    user.notes.push(newNote._id)
+    newNote.save((err,note)=>{
+      if(err){
+        res.json({message: 'error', detail: err})
+      } else {
+        user.save((err_user, savedUser)=>{
           res.json(note)
-        }
-      })
+        })
+      }
     })
   })
 })

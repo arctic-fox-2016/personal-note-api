@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const users = require('./users')
 const Schema = mongoose.Schema
 
 var noteSchema = mongoose.Schema({
@@ -7,7 +6,7 @@ var noteSchema = mongoose.Schema({
   content: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: users
+    ref: 'users'
   }
 })
 

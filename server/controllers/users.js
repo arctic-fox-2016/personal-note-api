@@ -12,21 +12,37 @@ module.exports = {
 }
 
 function createOne(req, res, next){
-  models.findOne({
-    username:req.body.username
-  },(err, record) => {
-    if(err) throw err
-    if(!_.isEmpty(record)){
-      res.status(400).json({error:"Username already exists"})
-    } else {
-      var record = new models({
-        username:req.body.username,
-        password:req.body.password
-      })
-      record.save()
-      res.status(200).json(record)
-    }
-  })
+  var paramUsername = _.trim(req.body.username)
+  var paramPassword = _.trim(req.body.password)
+  var paramEmail = _.trim(req.body.email)
+
+  if(_.isEmpty(paramUsername)){
+    res.status(400).json({error:"Username must be filled"})
+  } else if(_.isEmpty(paramPassword)){
+    res.status(400).json({error:"Password must be filled"})
+  } else if(_.isEmpty(paramEmail)){
+    res.status(400).json({error:"Email must be filled"})
+  } else {
+    models.findOne({
+      username:paramUsername
+    },(err, record) => {
+      if(err) throw err
+      if(!_.isEmpty(record)){
+        res.status(400).json({error:"Username already exists"})
+      } else {
+        var record = new models({
+          username:paramUsername,
+          password:null,
+          email:paramEmail
+        })
+        record.password = record.generateHash(paramPassword)
+        record.save(function(err){
+          if(err) console.log(err)
+          else res.status(200).json(record)
+        })
+      }
+    })
+  }
 }
 
 function findAll(req, res, next){

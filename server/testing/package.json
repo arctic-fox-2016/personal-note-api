@@ -1,0 +1,21 @@
+{
+  "name": "automated-testing",
+  "version": "0.1.0",
+  "description": "All about Ivan Gerard",
+  "main": "index.js",
+  "scripts": {
+
+  },
+  "author": "Ivan Gerard <me@ivangerard.com>",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.1"
+  },
+  "devDependencies": {
+    "live-server": "^1.1.0",
+    "mocha": "^3.1.1",
+    "mochawesome": "^1.5.3",
+    "opn-cli": "^3.1.0"
+  }
+}

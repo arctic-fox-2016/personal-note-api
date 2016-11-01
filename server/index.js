@@ -14,7 +14,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser())
-app.set('secretToken', configJWT.secret)
+app.set('secretToken', configJWT.secretKey)
 
 // Set starting routes
 app.use('/',require('./routes/api'))

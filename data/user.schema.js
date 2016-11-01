@@ -248,7 +248,7 @@ let MutationType = new GraphQLObjectType({
     fields: {
         add: MutationAdd,
         insert: MutationAdd,
-        find: Mutationfind,
+        find: MutationFind,
         findById: MutationFindbyId,
         delete: MutationDelete,
         remove: MutationDelete,

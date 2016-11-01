@@ -18,6 +18,10 @@ let Notes = mongoose.model('Notes', {
 let NotesType = new GraphQLObjectType({
     name: 'notes',
     fields: () => ({
+        id: {
+            type: GraphQLString,
+            description: 'ID Note'
+        },
         userid: {
             type: GraphQLString,
             description: 'ID User'
@@ -272,7 +276,7 @@ let MutationType = new GraphQLObjectType({
     fields: {
         add: MutationAdd,
         insert: MutationAdd,
-        find: Mutationfind,
+        find: MutationFind,
         findById: MutationFindbyId,
         delete: MutationDelete,
         remove: MutationDelete,

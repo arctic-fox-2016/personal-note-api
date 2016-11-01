@@ -1,13 +1,13 @@
-const express = require('express'),
-      bodyParser = require('body-parser'),
-      path = require('path'),
-      mongoose = require('mongoose'),
-      cors = require('cors')
+const express = require('express')
+const bodyParser = require('body-parser')
+const path = require('path')
+const mongoose = require('mongoose')
+const cors = require('cors')
 
 var app = express()
 var port = process.env.PORT || 9000
-var configDB = require('./config/database.js')
-var configJWT = require('./config/jwt.js')
+var configDB = require('./configs/database.js')
+var configJWT = require('./configs/jwt.js')
 
 mongoose.connect(configDB.url)
 app.use(cors())

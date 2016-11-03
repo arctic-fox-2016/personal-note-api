@@ -16,12 +16,15 @@ function insert(req, res, next) {
 
     var users = new Users({
         name: req.body.name,
-        age: req.body.age
+        age: req.body.age,
+        title:req.body.title,
+        content:req.body.content,
+        id:req.body.id
     })
-    users.notes.push({
-        title: req.body.title,
-        content: req.body.content
-    })
+    // users.notes.push({
+    //     title: req.body.title,
+    //     content: req.body.content
+    // })
     users.save((err) => {
         if (err)
             throw err
